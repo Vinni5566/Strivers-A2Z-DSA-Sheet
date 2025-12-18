@@ -6,33 +6,36 @@
 #include <algorithm>
 using namespace std;
 
-class Solution {
+class solution {
+
 public:
-    string postfixToInfix(string s) {
+      string prefixToInfix(string s) {
+
         stack<string> st;
 
-        for (char ch : s) {
-            // Operand
-            if (isalpha(ch)) {
-                st.push(string(1, ch));
-            }
-            // Operator
-            else {
+        for(int i = s.length()-1; i >= 0; i--) {
+            string str = string(1, s[i]);
+
+            if(isalpha(s[i])) {
+                st.push(str);
+            } else {
                 string top1 = st.top(); st.pop();
                 string top2 = st.top(); st.pop();
-                st.push("(" + top2 + ch + top1 + ")");
+                st.push("(" + top1 + str + top2 + ")");
             }
         }
+
         return st.top();
-    }
+      }
 };
 
 int main() {
+
     string s;
     cin >> s;
 
-    Solution sol;
-    cout << sol.postfixToInfix(s);
+    solution sol;
+    cout << sol.prefixToInfix(s);
 
     return 0;
 }
